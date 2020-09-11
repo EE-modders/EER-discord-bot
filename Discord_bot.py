@@ -54,6 +54,21 @@ async def on_message(message):
 	if message.content == '!link' or message.content == '!invite':
 		await message.channel.send('https://discord.gg/BjUXbFB')
 
+	if message.content.startswith("!say") or message.content.startswith("!SAY"):
+		new_message = message.content
+		end = "!"
+		if new_message.endswith(".") or new_message.endswith("!"):
+			new_message = new_message[5:-1]
+		elif new_message.endswith("?"):
+			new_message = new_message[5:-1]
+			end = "?"
+		else:
+			new_message = new_message[5:]
+
+		if new_message.endswith("father") or new_message.endswith("FATHER"):
+			new_message = new_message[:-6]
+
+		await message.channel.send(new_message.upper() + end)
 
 	### bot reactions
 
