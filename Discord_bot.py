@@ -63,21 +63,21 @@ async def on_message(message):
 	if "FATHER" in message.content:
 		await message.channel.send('HOW CAN I HELP?')
 
-	eer = [ "EE", "Empire Earth", "Reborn", "reborn", "EEC", "AoC" ]
+	eer = [ 'EE ', ' Empire Earth ', 'Reborn ', ' reborn ', ' EEC ', ' AoC ' ]
 	if any(x in message.content for x in eer):
 		await message.add_reaction('<:EmpireEarthReborn:614606364991291412>')
+
+	if "egg" in message.content or "gun" in message.content or "pipe" in message.content:
+		await message.add_reaction('<:eggplant2:751522664044167188>')
 
 	if "father" in message.content or "Father" in message.content:
 		await message.add_reaction('<:Ikillyoureaction:708770715121352781>')
 
-	if "nsfw" in message.content or "NSFW" in message.content:
-		await message.add_reaction('<:18:740312683664113714>')
-
-	if "egg" in message.content or "gun" in message.content or "tube" in message.content:
-		await message.add_reaction('<:eggplant2:751522664044167188>')
-
-	if "deer" in message.content or "dear" in message.content:
-			await message.add_reaction('🦌')
+	if "manly" in message.content or "MANLY" in message.content:
+		await message.add_reaction('<:Ikillyoureaction:708770715121352781>')
+		await message.add_reaction('<:REALMANLYGUN:749768825922257018>')
+		await message.add_reaction('<:desperate_shot:751531469675167772>')
+		await message.add_reaction('<:bullet:751529614987231266>')
 
 	if not message.content and (message.channel == client.get_channel(751149878167601352) or message.channel == client.get_channel(747077940092600371)):
 		await message.add_reaction('<:EmpireEarthReborn:614606364991291412>')
@@ -86,6 +86,15 @@ async def on_message(message):
 		await message.add_reaction('<:seriouslyreaction:699029974245441616>')
 		await message.add_reaction('<:crazyreaction:699029208462131312>')
 
+	nsfw = [ 'nsfw', 'NSFW', 'sexy' ]
+	if any(x in message.content for x in nsfw):
+		await message.add_reaction('<:18:740312683664113714>')
+
+	if "night" in message.content or "sleep" in message.content:
+		await message.add_reaction('😴')
+
+	if "deer" in message.content or "dear" in message.content:
+		await message.add_reaction('🦌')
 
 	## admin only functions
 	"""
