@@ -55,7 +55,14 @@ async def on_message(message):
 		await message.channel.send('https://discord.gg/BjUXbFB')
 
 	if message.content.startswith("!say") or message.content.startswith("!SAY"):
+		redir_message = False
 		new_message = message.content
+		
+		bot_playground = client.get_channel(754680163475652629)
+		community_talk = client.get_channel(614157221902811240)
+		
+		if message.content.startswith("!sayc") and message.channel == bot_playground:
+			redir_message = True
 		
 		# this sadly deletes too much....
 		#await message.delete()
@@ -72,8 +79,12 @@ async def on_message(message):
 		if new_message.endswith("father") or new_message.endswith("FATHER"):
 			new_message = new_message[:-6]
 
-		await message.channel.send(new_message.upper() + end)
+		new_message = new_message.upper() + end
 
+		if redir_message:
+			await community_talk.send(new_message[1:]) # I need to cut away the first letter, since "sayc" is longer by one char
+		else:
+			await message.channel.send(new_message)
 
 
 	### bot reactions
