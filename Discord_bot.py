@@ -56,6 +56,10 @@ async def on_message(message):
 
 	if message.content.startswith("!say") or message.content.startswith("!SAY"):
 		new_message = message.content
+		
+		# this sadly deletes too much....
+		#await message.delete()
+		
 		end = "!"
 		if new_message.endswith(".") or new_message.endswith("!"):
 			new_message = new_message[5:-1]
@@ -70,6 +74,8 @@ async def on_message(message):
 
 		await message.channel.send(new_message.upper() + end)
 
+
+
 	### bot reactions
 
 	if '<@!753374754294988881>' in message.content:
@@ -78,7 +84,7 @@ async def on_message(message):
 	if "FATHER" in message.content:
 		await message.channel.send('HOW CAN I HELP?')
 
-	eer = [ 'EE ', ' Empire Earth ', 'Reborn ', ' reborn ', ' EEC ', ' AoC ' ]
+	eer = [ ' EE', 'EE ', 'Empire Earth', 'Reborn', 'reborn', ' EEC', ' AoC' ]
 	if any(x in message.content for x in eer):
 		await message.add_reaction('<:EmpireEarthReborn:614606364991291412>')
 
@@ -110,6 +116,16 @@ async def on_message(message):
 
 	if "deer" in message.content or "dear" in message.content:
 		await message.add_reaction('🦌')
+
+	food = [ ' lunch', ' eat', ' food' ]
+	if any(x in message.content for x in food):
+		await message.add_reaction('🍔')
+		#await message.add_reaction('🍲')
+		await message.add_reaction('🥫')
+		await message.add_reaction('🍺')
+
+	if "beer" in message.content or "BEER" in message.content:
+		await message.add_reaction('🍺')
 
 	## admin only functions
 	"""
