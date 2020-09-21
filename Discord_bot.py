@@ -8,6 +8,7 @@ created: 09.09.2020 23:39
 """
 
 import os
+import re
 import discord
 
 try:
@@ -98,8 +99,9 @@ async def on_message(message):
 	eer = [ ' EE', 'EE ', 'Empire Earth', 'Reborn', 'reborn', ' EEC', ' AoC' ]
 	if any(x in message.content for x in eer):
 		await message.add_reaction('<:EmpireEarthReborn:614606364991291412>')
-
-	if "egg" in message.content or "gun" in message.content or "pipe" in message.content:
+		
+#"egg" in message.content or "gun" in message.content or
+	if re.match(".*(pipe|pipes)(\s|\.|,|$)", message.content):
 		await message.add_reaction('<:eggplant2:751522664044167188>')
 
 	if "father" in message.content or "Father" in message.content:
