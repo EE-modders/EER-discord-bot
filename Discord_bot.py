@@ -100,11 +100,11 @@ async def on_message(message):
 	if "FATHER" in message.content:
 		await message.channel.send('HOW CAN I HELP?')
 
-	eer = [ ' EE', 'EE ', 'Empire Earth', 'Reborn', 'reborn', ' EEC', ' AoC' ]
+	eer = [ 'Reborn', 'reborn', 'EER' ]
 	if any(x in message.content for x in eer):
 		await message.add_reaction('<:EmpireEarthReborn:614606364991291412>')
-		
-#"egg" in message.content or "gun" in message.content or
+
+	#"egg" in message.content or "gun" in message.content or
 	if re.match(".*(pipe|pipes)(\s|\.|,|$)", message.content):
 		await message.add_reaction('<:eggplant2:751522664044167188>')
 
