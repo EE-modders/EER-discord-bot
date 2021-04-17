@@ -55,6 +55,10 @@ async def on_message(message):
 	if message.content == '!link' or message.content == '!invite':
 		await message.channel.send('https://discord.gg/BjUXbFB')
 
+	if message.content in ['!release', '!date', '!download'] and message.content.startswith('!'):
+		await message.channel.send("Looking for release date or download link??".upper())
+		await message.channel.send('https://cdn.discordapp.com/attachments/535891419655569410/824072629769076776/123.png')
+
 	if message.content.startswith("!say") or message.content.startswith("!SAY"):
 		redir_message = False
 		new_message = message.content
