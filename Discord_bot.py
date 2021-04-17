@@ -33,7 +33,13 @@ async def on_ready():
 	#	await community_talk.send(msg)
 
 @client.event
-async def on_message(message):
+async def on_member_remove(member: discord.Member):
+	leave_channel: discord.TextChannel = client.get_channel(832980373557870663)
+	await leave_channel.send(f'Fucking {member.display_name} left the server!!')
+	await leave_channel.send('<:Ikillyoureaction:708770715121352781><:REALMANLYKNIFE:750789564737519727><:REALMANLYKNIFE:750789564737519727>')
+
+@client.event
+async def on_message(message: discord.Message):
 	if message.author == client.user:
 		return
 
