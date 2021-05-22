@@ -17,14 +17,25 @@ except KeyError:
 	print("ERROR: no token found! Please set the DISCORD_TOKEN env var!")
 	exit()
 
+VERSION = "1.5"
+
 client = discord.Client()
 
 @client.event
 async def on_ready():
 	print('We have logged in as %s' % client.user)
 
+	global community_talk
+	global bot_playground
+	global welcome_channel
+
 	community_talk = client.get_channel(614157221902811240)
+	bot_playground = client.get_channel(754680163475652629)
+	welcome_channel = client.get_channel(614154073759023106)
+
 	print(community_talk)
+
+	await bot_playground.send(f"FATHER reports for duty with version {VERSION}!")
 
 	## function to write messages using the bot
 	#
@@ -42,6 +53,11 @@ async def on_member_remove(member: discord.Member):
 async def on_message(message: discord.Message):
 	if message.author == client.user:
 		return
+
+	### join reactions
+	if message.channel == welcome_channel:
+		await message.add_reaction('👋')
+		await message.add_reaction('👀')
 
 	### direct commands
 
@@ -68,9 +84,6 @@ async def on_message(message: discord.Message):
 	if message.content.startswith("!say") or message.content.startswith("!SAY"):
 		redir_message = False
 		new_message = message.content
-		
-		bot_playground = client.get_channel(754680163475652629)
-		community_talk = client.get_channel(614157221902811240)
 		
 		if message.content.startswith("!sayc") and message.channel == bot_playground:
 			redir_message = True
