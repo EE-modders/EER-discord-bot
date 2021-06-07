@@ -10,20 +10,56 @@ created: 09.09.2020 23:39
 import os
 import re
 import discord
+import aiohttp
+import signal
+import sys
+
+dadjokeAPI = "https://icanhazdadjoke.com/"
+darkjokeAPI = "https://v2.jokeapi.dev/joke/Dark?blacklistFlags=nsfw,religious,racist"
+
+VERSION = "1.7"
 
 try:
 	token = os.environ["DISCORD_TOKEN"]
 except KeyError:
 	print("ERROR: no token found! Please set the DISCORD_TOKEN env var!")
-	exit()
+	sys.exit()
 
-VERSION = "1.5"
-
+	
+print("connecting...")
 client = discord.Client()
+print("client connected!")
+
+async def end():
+	print("trigger exit...")
+	client.close()
+	sys.exit()
+
+signal.signal(signal.SIGTERM, end)
+signal.signal(signal.SIGINT, end)
+
+async def send_dadjoke(channel: discord.TextChannel):
+	print("fetching dadjoke...")
+	async with aiohttp.ClientSession(headers={"Accept": "application/json"}) as session:
+		async with session.get(dadjokeAPI) as resp:
+			joke: dict = await resp.json()
+			print(joke)
+			await channel.send(f'Here is a _really_ bad dadjoke for you: \n\n **{joke.get("joke")}**')
+
+async def send_darkjoke(channel: discord.TextChannel):
+	print("fetching dark joke...")
+	async with aiohttp.ClientSession(headers={"Accept": "application/json"}) as session:
+		async with session.get(dadjokeAPI) as resp:
+			data: dict = await resp.json()
+
+			if data.get("type") == "twopart":
+				await channel.send(f'You requested a dark joke, so there you go: \n\n **{data.get("setup")}**\n\t**{data.get("delivery")}**')
+			else:
+				await channel.send(f'You requested a dark joke, so there you go: \n\n **{data.get("joke")}**')
 
 @client.event
 async def on_ready():
-	print('We have logged in as %s' % client.user)
+	print('We have logged in as', client.user)
 
 	global community_talk
 	global bot_playground
@@ -33,7 +69,7 @@ async def on_ready():
 	bot_playground = client.get_channel(754680163475652629)
 	welcome_channel = client.get_channel(614154073759023106)
 
-	print(community_talk)
+	#print(community_talk)
 
 	await bot_playground.send(f"FATHER reports for duty with version {VERSION}!")
 
@@ -81,6 +117,19 @@ async def on_message(message: discord.Message):
 		await message.channel.send("Looking for release date or download link??".upper())
 		await message.channel.send('https://cdn.discordapp.com/attachments/535891419655569410/824072629769076776/123.png')
 
+	## jokes
+	if message.content.startswith("!dadjoke") or re.match(r".*(father|please|tell).*(\sme\s).*(dad\s?joke).*$", message.content.lower()):
+		await send_dadjoke(message.channel)
+
+	if message.content.startswith("!darkjoke") or re.match(r".*(father|please|tell).*(\sme\s).*(dark\s?joke).*$", message.content.lower()):
+		await send_darkjoke(message.channel)
+
+
+	if re.match(r"^((I\s[a-z\s]*like\s|.*like(s)?)(beer).*|.*beer is.*)$", message.content.lower()):
+		await message.channel.send("I LIKE BEER TOO!! 🍺🍻")
+
+	## say command
+
 	if message.content.startswith("!say") or message.content.startswith("!SAY"):
 		redir_message = False
 		new_message = message.content
@@ -124,7 +173,7 @@ async def on_message(message: discord.Message):
 		await message.add_reaction('<:EmpireEarthReborn:614606364991291412>')
 
 	#"egg" in message.content or "gun" in message.content or
-	if re.match(".*(pipe|pipes)(\s|\.|,|$)", message.content):
+	if re.match(r".*(pipe|pipes)(\s|\.|,|$)", message.content):
 		await message.add_reaction('<:eggplant2:751522664044167188>')
 
 	if "father" in message.content or "Father" in message.content:
@@ -156,12 +205,14 @@ async def on_message(message: discord.Message):
 	food = [ ' lunch', ' eat', ' food' ]
 	if any(x in message.content for x in food):
 		await message.add_reaction('🍔')
-		#await message.add_reaction('🍲')
 		await message.add_reaction('🥫')
+		await message.add_reaction('🍖')
+		await message.add_reaction('🐡')
 		await message.add_reaction('🍺')
 
-	if "beer" in message.content or "BEER" in message.content:
+	if "beer" in message.content.lower():
 		await message.add_reaction('🍺')
+		await message.add_reaction('🍻')
 
 	## admin only functions
 	"""
