@@ -181,11 +181,6 @@ async def on_message(message: discord.Message):
 
 		await message.channel.send(embed=banner)
 
-		#await message.channel.send(
-		#	"> " + msg + "\n" +
-		#	"_" + translator.translate(msg) + "_"
-		#)
-
 	### bot reactions
 
 	if '<@!753374754294988881>' in message.content:
