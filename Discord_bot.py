@@ -9,18 +9,21 @@ created: 09.09.2020 23:39
 
 import os
 import re
-import discord
 import aiohttp
 import signal
 import sys
 
+import discord
+
+from deep_translator import GoogleTranslator
+
 dadjokeAPI = "https://icanhazdadjoke.com/"
 darkjokeAPI = "https://v2.jokeapi.dev/joke/Dark?blacklistFlags=nsfw,religious,racist"
 
-VERSION = "1.7"
+VERSION = "1.8"
 
 try:
-	token = os.environ["DISCORD_TOKEN"]
+	TOKEN = os.environ["DISCORD_TOKEN"]
 except KeyError:
 	print("ERROR: no token found! Please set the DISCORD_TOKEN env var!")
 	sys.exit()
@@ -29,6 +32,9 @@ except KeyError:
 print("connecting...")
 client = discord.Client()
 print("client connected!")
+
+translator = GoogleTranslator(source='auto', target='en')
+print("translator ready!")
 
 async def end():
 	print("trigger exit...")
@@ -108,7 +114,6 @@ async def on_message(message: discord.Message):
 
 	if message.content.startswith("!badass"):
 		await message.channel.send('<:REALMANLYGUN2:749769945667338322><:Ikillyoureaction:708770715121352781><:REALMANLYGUN:749768825922257018>')
-		#await message.channel.send('')
 
 	if message.content == '!link' or message.content == '!invite':
 		await message.channel.send('https://discord.gg/BjUXbFB')
@@ -130,11 +135,11 @@ async def on_message(message: discord.Message):
 
 	## say command
 
-	if message.content.startswith("!say") or message.content.startswith("!SAY"):
+	if message.content.lower().startswith("!say"):
 		redir_message = False
 		new_message = message.content
 		
-		if message.content.startswith("!sayc") and message.channel == bot_playground:
+		if message.content.lower().startswith("!sayc") and message.channel == bot_playground:
 			redir_message = True
 		
 		# this sadly deletes too much....
@@ -159,6 +164,27 @@ async def on_message(message: discord.Message):
 		else:
 			await message.channel.send(new_message)
 
+	## translate command
+	if message.content.lower().startswith("!t "):
+		msg: str = message.content[3:]
+
+		banner = discord.Embed(
+			title="",
+			description=translator.translate(msg),
+			color=0xff00ff
+		)
+		banner.set_author(
+			name=message.author.display_name,
+			icon_url=message.author.avatar_url
+		)
+		#banner.set_footer(text="FATHER's best translator")
+
+		await message.channel.send(embed=banner)
+
+		#await message.channel.send(
+		#	"> " + msg + "\n" +
+		#	"_" + translator.translate(msg) + "_"
+		#)
 
 	### bot reactions
 
@@ -269,4 +295,4 @@ async def on_message(message: discord.Message):
 		await message.channel.send("COPY DONE!")
 	"""
 
-client.run(token)
+client.run(TOKEN)
