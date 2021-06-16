@@ -102,7 +102,6 @@ async def on_message(message: discord.Message):
 		await message.add_reaction('👀')
 
 	### direct commands
-
 	if message.content.startswith('!hello'):
 		await message.channel.send('Hello!')
         
@@ -134,7 +133,6 @@ async def on_message(message: discord.Message):
 		await message.channel.send("I LIKE BEER TOO!! 🍺🍻")
 
 	## say command
-
 	if message.content.lower().startswith("!say"):
 		redir_message = False
 		new_message = message.content
@@ -182,7 +180,6 @@ async def on_message(message: discord.Message):
 		await message.channel.send(embed=banner)
 
 	### bot reactions
-
 	if '<@!753374754294988881>' in message.content:
 		await message.channel.send("WHO PINGED ME?? <:REALMANLYKNIFE:750789564737519727>")
 
