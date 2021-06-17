@@ -20,7 +20,7 @@ from deep_translator import GoogleTranslator
 dadjokeAPI = "https://icanhazdadjoke.com/"
 darkjokeAPI = "https://v2.jokeapi.dev/joke/Dark?blacklistFlags=nsfw,religious,racist"
 
-VERSION = "1.8"
+VERSION = "1.9"
 
 try:
 	TOKEN = os.environ["DISCORD_TOKEN"]
@@ -70,10 +70,14 @@ async def on_ready():
 	global community_talk
 	global bot_playground
 	global welcome_channel
+	global tech_support
+	global test_channel
 
 	community_talk = client.get_channel(614157221902811240)
 	bot_playground = client.get_channel(754680163475652629)
 	welcome_channel = client.get_channel(614154073759023106)
+	tech_support = client.get_channel(850300791335551026)
+	test_channel = client.get_channel(751149878167601352)
 
 	#print(community_talk)
 
@@ -231,6 +235,11 @@ async def on_message(message: discord.Message):
 	if "beer" in message.content.lower():
 		await message.add_reaction('🍺')
 		await message.add_reaction('🍻')
+
+	broken = [' ddraw.dll', 'error', 'crash', 'broken', 'not work', 'directx', 'dgvoodoo', 'fail', 'fuck']
+	if message.channel in [tech_support, bot_playground, test_channel] and \
+			any(x in message.content.lower() for x in broken):
+		await message.add_reaction('<:BROKENasFUCK:854865761994276874>')
 
 	## admin only functions
 	"""
