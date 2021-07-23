@@ -20,7 +20,7 @@ from deep_translator import GoogleTranslator
 dadjokeAPI = "https://icanhazdadjoke.com/"
 darkjokeAPI = "https://v2.jokeapi.dev/joke/Dark?blacklistFlags=nsfw,religious,racist"
 
-VERSION = "1.9"
+VERSION = "1.10"
 
 try:
 	TOKEN = os.environ["DISCORD_TOKEN"]
@@ -236,7 +236,7 @@ async def on_message(message: discord.Message):
 		await message.add_reaction('🍺')
 		await message.add_reaction('🍻')
 
-	broken = [' ddraw.dll', 'error', 'crash', 'broken', 'not work', 'directx', 'dgvoodoo', 'fail', 'fuck']
+	broken = [' ddraw.dll', 'error', 'crash', 'broken', 'not work', 'directx', 'fail', 'fuck']
 	if message.channel in [tech_support, bot_playground, test_channel] and \
 			any(x in message.content.lower() for x in broken):
 		await message.add_reaction('<:BROKENasFUCK:854865761994276874>')
