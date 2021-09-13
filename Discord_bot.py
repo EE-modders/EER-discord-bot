@@ -20,7 +20,7 @@ from deep_translator import GoogleTranslator
 dadjokeAPI = "https://icanhazdadjoke.com/"
 darkjokeAPI = "https://v2.jokeapi.dev/joke/Dark?blacklistFlags=nsfw,religious,racist"
 
-VERSION = "1.10"
+VERSION = "1.11"
 
 try:
 	TOKEN = os.environ["DISCORD_TOKEN"]
@@ -143,9 +143,6 @@ async def on_message(message: discord.Message):
 		
 		if message.content.lower().startswith("!sayc") and message.channel == bot_playground:
 			redir_message = True
-		
-		# this sadly deletes too much....
-		#await message.delete()
 		
 		end = "!"
 		if new_message.endswith(".") or new_message.endswith("!"):
