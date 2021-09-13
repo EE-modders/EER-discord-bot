@@ -156,6 +156,9 @@ async def on_message(message: discord.Message):
 		if new_message.endswith("father") or new_message.endswith("FATHER"):
 			new_message = new_message[:-6]
 
+		if len(new_message) <= 1:
+			new_message = "what the heck should I say?!?".upper()
+
 		new_message = new_message.upper() + end
 
 		if redir_message:
