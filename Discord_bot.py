@@ -20,7 +20,7 @@ from deep_translator import GoogleTranslator
 dadjokeAPI = "https://icanhazdadjoke.com/"
 darkjokeAPI = "https://v2.jokeapi.dev/joke/Dark?blacklistFlags=nsfw,religious,racist"
 
-VERSION = "1.11"
+VERSION = "1.12"
 
 try:
 	TOKEN = os.environ["DISCORD_TOKEN"]
@@ -206,6 +206,10 @@ async def on_message(message: discord.Message):
 		await message.add_reaction('<:REALMANLYGUN:749768825922257018>')
 		await message.add_reaction('<:desperate_shot:751531469675167772>')
 		await message.add_reaction('<:bullet:751529614987231266>')
+
+	if "rebellion" in message.content.lower():
+		await message.channel.send("DID I HEAR REBELLION??")
+		await message.channel.send("https://cdn.discordapp.com/attachments/535890577191862305/936410898803855380/but_animalsacrifice_04.png")
 
 	if not message.content and (message.channel == client.get_channel(751149878167601352) or message.channel == client.get_channel(747077940092600371)):
 		await message.add_reaction('<:EmpireEarthReborn:614606364991291412>')
