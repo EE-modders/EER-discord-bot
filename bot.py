@@ -282,12 +282,12 @@ eeBot = FatherOfEE(EE_REBORN_GUILD)
 
 initSlashCommands(eeBot)
 
-async def end():
-	print("trigger exit...")
-	eeBot.close()
-	sys.exit()
-
-signal.signal(signal.SIGTERM, end)
-signal.signal(signal.SIGINT, end)
+## not needed anymore, discord.Client now has its own signal handler
+#def end(*args):
+#	print("trigger exit...")
+#	eeBot.close()
+#	sys.exit()
+#signal.signal(signal.SIGTERM, end)
+#signal.signal(signal.SIGINT, end)
 
 eeBot.run(TOKEN)
