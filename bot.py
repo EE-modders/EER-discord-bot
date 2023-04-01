@@ -38,17 +38,17 @@ class FatherOfEE(discord.Client):
     GUILD_ID: int
 
     def __init__(self, guildID: int):
+        # set requested permissions
         intents = discord.Intents.default()
         intents.message_content = True
+        intents.members = True
+        intents.guilds = True
 
         super().__init__(intents=intents)
 
         self.GUILD_ID = guildID
-        self.guild = discord.Object(id=self.GUILD_ID) # self.get_guild(self.GUILD_ID) #discord.Object(id=guildID)
+        self.guild = discord.Object(id=self.GUILD_ID) # self.get_guild(self.GUILD_ID)
         self.slashCommands = app_commands.CommandTree(self)
-
-        self.setupChannels()
-        self.setupTranslator()
 
     def setupChannels(self):
         self.community_talk = self.get_channel(614157221902811240)
@@ -69,8 +69,12 @@ class FatherOfEE(discord.Client):
 
     async def on_ready(self):
         print("Logged in as", self.user, self.user.id)
+        self.setupChannels()
+        self.setupTranslator()
+
         await self.bot_playground.send(f"FATHER reports for duty with version {VERSION}!")
 
+    #async def on_guild_remove()
     async def on_member_remove(self, member: discord.Member):
         await self.leave_channel.send(f'Fucking {member.display_name} left the server!!')
         await self.leave_channel.send(Ikillyoureaction+REALMANLYKNIFE+REALMANLYKNIFE)
