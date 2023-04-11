@@ -76,8 +76,8 @@ class FatherOfEE(discord.Client):
 
     #async def on_guild_remove()
     async def on_member_remove(self, member: discord.Member):
-        await self.leave_channel.send(f'Fucking {member.display_name} left the server!!')
-        await self.leave_channel.send(Ikillyoureaction+REALMANLYKNIFE+REALMANLYKNIFE)
+        await self.leave_channel.send(f'Fucking {member.display_name} left the server!!', silent=True)
+        await self.leave_channel.send(Ikillyoureaction+REALMANLYKNIFE+REALMANLYKNIFE, silent=True)
 
     async def on_message(self, message: discord.Message):
         """
