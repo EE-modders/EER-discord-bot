@@ -19,7 +19,7 @@ except KeyError:
 	sys.exit()
 
 
-VERSION = "2.0"
+VERSION = "2.1"
 EE_REBORN_GUILD = 614154073759023104
 EE_REBORN_INVITE = "https://discord.gg/BjUXbFB"
 
@@ -63,14 +63,20 @@ class FatherOfEE(discord.Client):
         print("translator ready!")
 
     async def setup_hook(self):
-        self.slashCommands.copy_global_to(guild=self.guild)
-        await self.slashCommands.sync(guild=self.guild)
+        #self.slashCommands.copy_global_to(guild=self.guild)
+        #await self.slashCommands.sync(guild=self.guild)
         await super().setup_hook()
 
     async def on_ready(self):
         print("Logged in as", self.user, self.user.id)
         self.setupChannels()
         self.setupTranslator()
+
+        # to get rid of zombie commands
+        #self.slashCommands.clear_commands(guild=self.guild)
+
+        syncedCommands = await self.slashCommands.sync()
+        print("synced commands: ", [x.name for x in syncedCommands])
 
         await self.bot_playground.send(f"FATHER reports for duty with version {VERSION}!")
 
