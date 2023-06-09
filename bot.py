@@ -19,7 +19,7 @@ except KeyError:
 	sys.exit()
 
 
-VERSION = "2.1"
+VERSION = "2.2"
 EE_REBORN_GUILD = 614154073759023104
 EE_REBORN_INVITE = "https://discord.gg/BjUXbFB"
 
@@ -27,11 +27,24 @@ dadjokeAPI = "https://icanhazdadjoke.com/"
 darkjokeAPI = "https://v2.jokeapi.dev/joke/Dark?blacklistFlags=nsfw,religious,racist"
 
 ## Reactions on EE Reborn Server
-Ikillyoureaction = "<:Ikillyoureaction:708770715121352781>"
+EMPIREEARTHREBORN = "<:EmpireEarthReborn:614606364991291412>"
+IKILLYOUREACTION = "<:Ikillyoureaction:708770715121352781>"
 REALMANLYKNIFE = "<:REALMANLYKNIFE:750789564737519727>"
-REALMANLYGUN = "<:REALMANLYGUN:749768825922257018>"
-REALMANLYGUN2 = "<:REALMANLYGUN2:749769945667338322>"
+REALMANLYGUN = "<:REALMANLYGUN:1116855780042358875>"
+REALMANLYGUN2 = "<:REALMANLYGUN2:1116855832890593381>"
+BROKENASFUCK = "<:BROKENasFUCK:854865761994276874>"
 
+SADREACTION = "<:sadreaction:663447982628143104>"
+SERIOUSLYREACION = "<:seriouslyreaction:699029974245441616>"
+CRAZYREACION = "<:crazyreaction:699029208462131312>"
+
+EGGPLANT2 = "<:eggplant2:751522664044167188>"
+DESPERATE_SHOT = "<:desperate_shot:751531469675167772>"
+BULLET = "<:bullet:751529614987231266>"
+PLUS18 = "<:18:740312683664113714>"
+
+## EEReborn devteam user ping
+AT_ATLAS = "<@536077018673053717>"
 
 class FatherOfEE(discord.Client):
 
@@ -83,7 +96,7 @@ class FatherOfEE(discord.Client):
     #async def on_guild_remove()
     async def on_member_remove(self, member: discord.Member):
         await self.leave_channel.send(f'Fucking {member.display_name} left the server!!', silent=True)
-        await self.leave_channel.send(Ikillyoureaction+REALMANLYKNIFE+REALMANLYKNIFE, silent=True)
+        await self.leave_channel.send(IKILLYOUREACTION+REALMANLYKNIFE+REALMANLYKNIFE, silent=True)
 
     async def on_message(self, message: discord.Message):
         """
@@ -108,27 +121,27 @@ class FatherOfEE(discord.Client):
             await message.channel.send("I LIKE BEER TOO!! 🍺🍻")
 
         if '<@753374754294988881>' in message.content:
-            await message.channel.send("WHO PINGED ME?? <:REALMANLYKNIFE:750789564737519727>")
+            await message.channel.send(f"WHO PINGED ME?? {REALMANLYKNIFE}")
 
         if "FATHER" in message.content:
             await message.channel.send('HOW CAN I HELP?')
 
         eer = [ 'Reborn', 'reborn', 'EER' ]
         if any(x in message.content for x in eer):
-            await message.add_reaction('<:EmpireEarthReborn:614606364991291412>')
+            await message.add_reaction(EMPIREEARTHREBORN)
 
         #"egg" in message.content or "gun" in message.content or
         if re.match(r".*(pipe|pipes)(\s|\.|,|$)", message.content):
-            await message.add_reaction('<:eggplant2:751522664044167188>')
+            await message.add_reaction(EGGPLANT2)
 
         if "father" in message.content or "Father" in message.content:
-            await message.add_reaction('<:Ikillyoureaction:708770715121352781>')
+            await message.add_reaction(IKILLYOUREACTION)
 
         if "manly" in message.content or "MANLY" in message.content:
-            await message.add_reaction('<:Ikillyoureaction:708770715121352781>')
-            await message.add_reaction('<:REALMANLYGUN:749768825922257018>')
-            await message.add_reaction('<:desperate_shot:751531469675167772>')
-            await message.add_reaction('<:bullet:751529614987231266>')
+            await message.add_reaction(IKILLYOUREACTION)
+            await message.add_reaction(REALMANLYGUN)
+            await message.add_reaction(DESPERATE_SHOT)
+            await message.add_reaction(BULLET)
 
         if "rebellion" in message.content.lower():
             await message.channel.send("DID I HEAR REBELLION??")
@@ -137,15 +150,15 @@ class FatherOfEE(discord.Client):
         if not message.content and \
                 (message.channel == self.test_channel 
                 or message.channel == self.get_channel(747077940092600371)):
-            await message.add_reaction('<:EmpireEarthReborn:614606364991291412>')
-            await message.add_reaction('<:Ikillyoureaction:708770715121352781>')
-            await message.add_reaction('<:sadreaction:663447982628143104>')
-            await message.add_reaction('<:seriouslyreaction:699029974245441616>')
-            await message.add_reaction('<:crazyreaction:699029208462131312>')
+            await message.add_reaction(EMPIREEARTHREBORN)
+            await message.add_reaction(IKILLYOUREACTION)
+            await message.add_reaction(SADREACTION)
+            await message.add_reaction(SERIOUSLYREACION)
+            await message.add_reaction(CRAZYREACION)
 
         nsfw = [ 'nsfw', 'NSFW', 'sexy' ]
         if any(x in message.content for x in nsfw):
-            await message.add_reaction('<:18:740312683664113714>')
+            await message.add_reaction(PLUS18)
 
         if "night" in message.content or "sleep" in message.content:
             await message.add_reaction('😴')
@@ -168,7 +181,7 @@ class FatherOfEE(discord.Client):
         broken = [' ddraw.dll', 'error', 'crash', 'broken', 'not work', 'directx', 'fail', 'fuck']
         if message.channel in [self.tech_support, self.bot_playground, self.test_channel] \
              and any(x in message.content.lower() for x in broken):
-            await message.add_reaction('<:BROKENasFUCK:854865761994276874>')
+            await message.add_reaction(BROKENASFUCK)
 
 
         ## sayc command
@@ -204,11 +217,11 @@ def initSlashCommands(client: FatherOfEE):
 
     @client.slashCommands.command(name="helloatlasfield", description="Says hello to Atlasfield")
     async def helloAtlas(inter: discord.Interaction):
-        await inter.response.send_message("Hello <@536077018673053717>!")
+        await inter.response.send_message(f"Hello {AT_ATLAS}!")
 
     @client.slashCommands.command(name="badass")
     async def badass(inter: discord.Interaction):
-        await inter.response.send_message(REALMANLYGUN2+Ikillyoureaction+REALMANLYGUN)
+        await inter.response.send_message(REALMANLYGUN2+IKILLYOUREACTION+REALMANLYGUN)
 
     @client.slashCommands.command(name="invite", description="shows invite link for this server")
     async def invite(inter: discord.Interaction):
