@@ -19,7 +19,7 @@ except KeyError:
 	sys.exit()
 
 
-VERSION = "2.2"
+VERSION = "2.3"
 EE_REBORN_GUILD = 614154073759023104
 EE_REBORN_INVITE = "https://discord.gg/BjUXbFB"
 
@@ -185,28 +185,23 @@ class FatherOfEE(discord.Client):
 
 
         ## sayc command
-        ### TODO implement this properly
-        if message.content.lower().startswith("!sayc") and message.channel == self.bot_playground:
-            new_message = message.content
+        if message.content.startswith("!sayc ") and message.channel == self.bot_playground:
+            new_message = message.content.lower()[6:].strip()
 
-            end = "!"
-            if new_message.endswith(".") or new_message.endswith("!"):
-                new_message = new_message[5:-1]
-            elif new_message.endswith("?"):
-                new_message = new_message[5:-1]
-                end = "?"
-            else:
-                new_message = new_message[5:]
+            if new_message.endswith("."):
+                new_message = new_message[:-1] + "!"
 
-            if new_message.endswith("father") or new_message.endswith("FATHER"):
-                new_message = new_message[:-6]
+            if new_message.endswith("?"):
+                new_message += "?"
+
+            # not sure why I added that ffs
+            #if new_message.endswith("father"):
+            #    new_message = new_message[:-6]
 
             if len(new_message) <= 1:
-                new_message = "what the heck should I say?!?".upper()
+                new_message = "what the heck should I say?!?"
 
-            new_message = new_message.upper() + end
-
-            await self.community_talk.send(new_message[1:]) # I need to cut away the first letter, since "sayc" is longer by one char
+            await self.community_talk.send(new_message.upper())
 
 
 def initSlashCommands(client: FatherOfEE):
