@@ -143,9 +143,9 @@ class FatherOfEE(discord.Client):
             await message.add_reaction(DESPERATE_SHOT)
             await message.add_reaction(BULLET)
 
-        if "rebellion" in message.content.lower():
-            await message.channel.send("DID I HEAR REBELLION??")
-            await message.channel.send("https://cdn.discordapp.com/attachments/535890577191862305/936410898803855380/but_animalsacrifice_04.png")
+        #if "rebellion" in message.content.lower():
+        #    await message.channel.send("DID I HEAR REBELLION??")
+        #    await message.channel.send("https://cdn.discordapp.com/attachments/535890577191862305/936410898803855380/but_animalsacrifice_04.png")
 
         if not message.content and \
                 (message.channel == self.test_channel 
