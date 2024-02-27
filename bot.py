@@ -112,7 +112,7 @@ class FatherOfEE(discord.Client):
             )
 
         except discord.Forbidden:
-            print("Missing ~Permissions.ban_members!")
+            print("Missing ~Permissions.ban_members permission")
         except discord.HTTPException as e:
             print("Failed to fetch_ban():", e)
 
@@ -220,6 +220,17 @@ class FatherOfEE(discord.Client):
                 new_message = "what the heck should I say?!?"
 
             await self.community_talk.send(new_message.upper())
+
+        ## test commands
+        if message.channel == self.test_channel and message.content.startswith("!test"):
+            try:
+                await message.author.guild.fetch_ban(message.author)
+            except discord.NotFound:
+                print(message.author.display_name, "is not banned")
+            except discord.Forbidden:
+                print("Missing ~Permissions.ban_members permission")
+            except discord.HTTPException as e:
+                print("Failed to fetch_ban():", e)
 
 
 def initSlashCommands(client: FatherOfEE):
