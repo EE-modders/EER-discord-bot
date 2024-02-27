@@ -19,7 +19,7 @@ except KeyError:
 	sys.exit()
 
 
-VERSION = "2.4"
+VERSION = "2.5"
 EE_REBORN_GUILD = 614154073759023104
 EE_REBORN_INVITE = "https://discord.gg/BjUXbFB"
 
@@ -42,6 +42,8 @@ EGGPLANT2 = "<:eggplant2:751522664044167188>"
 DESPERATE_SHOT = "<:desperate_shot:751531469675167772>"
 BULLET = "<:bullet:751529614987231266>"
 PLUS18 = "<:18:740312683664113714>"
+
+GETTHEFUCKOUT = "<:ZOCKERjustgetTHEFUCKOUT:854049905584504862>"
 
 ## EEReborn devteam user ping
 AT_ATLAS = "<@536077018673053717>"
@@ -95,8 +97,24 @@ class FatherOfEE(discord.Client):
 
     #async def on_guild_remove()
     async def on_member_remove(self, member: discord.Member):
-        await self.leave_channel.send(f'Fucking {member.display_name} left the server!!', silent=True)
-        await self.leave_channel.send(IKILLYOUREACTION+REALMANLYKNIFE+REALMANLYKNIFE, silent=True)
+        try:
+            banentry: discord.BanEntry = await member.guild.fetch_ban()
+
+            await self.leave_channel.send(f"🔥🔥 Fucking {banentry.user.display_name} got banned!!! 🔥🔥")
+            await self.leave_channel.send(f"Reason: {banentry.reason}")
+            await self.leave_channel.send(GETTHEFUCKOUT+IKILLYOUREACTION)
+
+        except discord.NotFound:
+            await self.leave_channel.send(
+                f"Fucking {member.display_name} left the server!!"
+                " "+IKILLYOUREACTION+REALMANLYKNIFE+REALMANLYKNIFE,
+                silent=True
+            )
+
+        except discord.Forbidden:
+            print("Missing ~Permissions.ban_members!")
+        except discord.HTTPException as e:
+            print("Failed to fetch_ban():", e)
 
     async def on_message(self, message: discord.Message):
         """
