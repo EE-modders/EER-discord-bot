@@ -19,7 +19,7 @@ except KeyError:
 	sys.exit()
 
 
-VERSION = "2.6"
+VERSION = "2.7"
 EE_REBORN_GUILD = 614154073759023104
 EE_REBORN_INVITE = "https://discord.gg/BjUXbFB"
 
@@ -101,7 +101,18 @@ class FatherOfEE(discord.Client):
             banentry: discord.BanEntry = await member.guild.fetch_ban(member)
 
             await self.leave_channel.send(f"🔥🔥 Fucking {banentry.user.display_name} got banned!!! 🔥🔥")
-            await self.leave_channel.send(f"Reason: {banentry.reason}")
+
+            # stupid discord does not localize predefined ban reasons, so we do this stupid thing
+            reason = banentry.reason
+
+            if "Serverregeln" in reason:
+                reason = "violation of server rules"
+            if "Verdächtiger" in reason:
+                reason = "suspicious spam account"
+            if "gehackter" in reason:
+                reason = "hacked account"
+
+            await self.leave_channel.send(f"Reason: {reason}")
             await self.leave_channel.send(GETTHEFUCKOUT+IKILLYOUREACTION)
 
         except discord.NotFound:
