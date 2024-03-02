@@ -19,7 +19,7 @@ except KeyError:
 	sys.exit()
 
 
-VERSION = "2.5"
+VERSION = "2.6"
 EE_REBORN_GUILD = 614154073759023104
 EE_REBORN_INVITE = "https://discord.gg/BjUXbFB"
 
