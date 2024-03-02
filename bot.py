@@ -98,7 +98,7 @@ class FatherOfEE(discord.Client):
     #async def on_guild_remove()
     async def on_member_remove(self, member: discord.Member):
         try:
-            banentry: discord.BanEntry = await member.guild.fetch_ban()
+            banentry: discord.BanEntry = await member.guild.fetch_ban(member)
 
             await self.leave_channel.send(f"🔥🔥 Fucking {banentry.user.display_name} got banned!!! 🔥🔥")
             await self.leave_channel.send(f"Reason: {banentry.reason}")
