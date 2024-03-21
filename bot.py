@@ -163,10 +163,10 @@ class FatherOfEE(discord.Client):
         if re.match(r".*(pipe|pipes)(\s|\.|,|$)", message.content):
             await message.add_reaction(EGGPLANT2)
 
-        if "father" in message.content or "Father" in message.content:
+        if "father" in message.content.lower():
             await message.add_reaction(IKILLYOUREACTION)
 
-        if "manly" in message.content or "MANLY" in message.content:
+        if "manly" in message.content.lower():
             await message.add_reaction(IKILLYOUREACTION)
             await message.add_reaction(REALMANLYGUN)
             await message.add_reaction(DESPERATE_SHOT)
