@@ -19,7 +19,7 @@ except KeyError:
 	sys.exit()
 
 
-VERSION = "2.7"
+VERSION = "2.8"
 EE_REBORN_GUILD = 614154073759023104
 EE_REBORN_INVITE = "https://discord.gg/BjUXbFB"
 
@@ -43,10 +43,16 @@ DESPERATE_SHOT = "<:desperate_shot:751531469675167772>"
 BULLET = "<:bullet:751529614987231266>"
 PLUS18 = "<:18:740312683664113714>"
 
+SUSPICIOUS_R = "<:suspicious:739180425569894442>"
+SUSPICIOUS_L = "<:suspicious2:740199310347468811>"
+
 GETTHEFUCKOUT = "<:ZOCKERjustgetTHEFUCKOUT:854049905584504862>"
 
-## EEReborn devteam user ping
+## EEReborn user / group / role ping
+AT_REBORN_DEV_LEAD = "<@&614158320202285104>"
 AT_ATLAS = "<@536077018673053717>"
+AT_MODERATOR = "<@&614159848648474644>"
+AT_FK_EVERYONE = "<@&958408358371659826>" # fake everyone group
 
 class FatherOfEE(discord.Client):
 
@@ -231,6 +237,37 @@ class FatherOfEE(discord.Client):
                 new_message = "what the heck should I say?!?"
 
             await self.community_talk.send(new_message.upper())
+
+        if message.channel == self.community_talk or message.channel == self.test_channel:
+            msg = message.content.lower()
+
+            ## scam message alert
+            sussy = ["http", "https", "gratis", "nitro", "adobe"]
+            if any(x in msg for x in sussy) and AT_FK_EVERYONE in msg:
+                quote = discord.Embed(color=0xff0000)
+                quote.set_author(
+                    name=f"by {message.author.name} (click to jump)",
+                    url=message.jump_url,
+                    icon_url=message.author.avatar.url
+                )
+                quote.add_field(
+                    name="Message:",
+                    value=message.content
+                )
+
+                await self.bot_playground.send(
+                    f"{AT_MODERATOR} \n🚨🚨 "
+                    f"possible scam message detected {SUSPICIOUS_L}",
+                    embed=quote
+                )
+                return
+
+            ## @everyone ping alert
+            if AT_FK_EVERYONE in msg:
+                await self.bot_playground.send(
+                    f"{AT_MODERATOR} \n🚨 use of `@everyone` detected! 🚨\n"
+                    f"{message.jump_url}"
+                )
 
         ## test commands
         if message.channel == self.test_channel and message.content.startswith("!test"):
