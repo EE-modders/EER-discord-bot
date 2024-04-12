@@ -1,0 +1,12 @@
+name: "eebot"
+services:
+  eebot:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    restart: unless-stopped
+    #environment:
+    #  - "DISCORD_TOKEN="
+    volumes:
+      - .:/home/Discordbot
+    command: "python3 ./bot.py"
