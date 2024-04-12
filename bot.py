@@ -1,5 +1,10 @@
 #! /usr/bin/env python3
 
+"""
+@autor: zocker_160 from EE-modders
+@date: 09.09.2020 23:39
+"""
+
 import os
 import re
 import aiohttp
@@ -12,11 +17,10 @@ from discord import app_commands
 from deep_translator import GoogleTranslator
 
 
-try:
-	TOKEN = os.environ["DISCORD_TOKEN"]
-except KeyError:
-	print("ERROR: no token found! Please set the DISCORD_TOKEN env var!")
-	sys.exit()
+TOKEN = os.environ.get("DISCORD_TOKEN")
+if not TOKEN:
+    print("ERROR: no token found! Please set the DISCORD_TOKEN env var!")
+    sys.exit()
 
 
 VERSION = "2.8"
